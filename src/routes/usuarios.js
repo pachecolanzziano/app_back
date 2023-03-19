@@ -4,7 +4,7 @@ const userSchema = require("../model/usuario")
 
 //creaete usuario
 router.get('/usuarios/:id', async(req, res) => {
-    const { id } = req.params.id;
+    const { id } = req.params;
     const usuario = await userSchema.findById(id);
     res.json(usuario);
 })
@@ -22,13 +22,17 @@ router.post('/usuarios', (req, res) => {
 })
 
 router.put('/usuarios/:id', async(req, res) => {
-    await userSchema.findByIdAndUpdate(req.params.id, req.body)
+    const { id } = req.params;
+    const { nombre, apellido, telefono, email, img} = req.body;
+    await userSchema.updateOne({ _id:id }, {$set: {nombre, apellido, telefono, email, img}})
     .then((data) => res.json(data))
     .catch((error)=> res.json({message: error}))
 })
 
 router.delete('/usuarios/:id', async(req, res) => {
-    await userSchema.findByIdAndRemove(req.params.id)
+    const { id } = req.params;
+    await userSchema
+    .findByIdAndRemove({ _id: id })
     .then((data) => res.json(data))
     .catch((error)=> res.json({message: error}))
 })
