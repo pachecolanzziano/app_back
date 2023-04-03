@@ -1,5 +1,8 @@
 # app_back
 
+const query = UserModel.find({ name: 'Jean-Luc Picard' });
+query.getFilter();
+
 npm i 
 npm uninstall
 
@@ -62,4 +65,13 @@ npm i @types/express @types/cors @types/dotenv @types/multer @types/mongoose -D
 
 ##### En routes existe un archivo index, que genera y exporta dinamicamente los modulos de las rutas gracias a Router().
 
+#### cada ruta debe llamar su respectivo controlador para gestionar su tarea segun el protocolo necesario GET, POST, PUT , DELETE
+#### cada cotrolador debe llamar su respectivo servicios donde se realizan todas las tareas de manera detallada. 
 
+
+#### aparecen los manejadores (handle) en los controladores. en este caso un controlador de errores.
+#### se crea una carpeta llamada util donde se guardaran
+
+### se accede a la base de datos desde los servicios, por lo cual nace la carpeta MODEL para nuestros modelos ed las DB
+
+#### y a su ves la carpeta interfaz para cada uno de los usuarios
