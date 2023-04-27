@@ -6,13 +6,19 @@ const listUsers = async () => {
     return responseUsers;
 }
 
-const loginUser = async ( {body}:Request ) => {
-    const {email, password} = body;
-    const verificarUsuario = await UserModel.findOne({email});
-    if (!verificarUsuario) return "NOT_FOUND_USER";
-    console.log(email);
-    console.log(password);
-    
+const loginUser = async ( {email, password}) => {
+    const userCheckIs = await UserModel.findOne({email});
+    if (!userCheckIs) return "NOT_FOUND_USER";
+
+    const passwordHash = userCheckIs.password;
+    const isCorrect = await verified(password, passwordHash);
+
+    if(!isCorrect) return "PASSWORD_INCORRECT";
+    const token = generateToken(userCheckIs.email);
+    const data = {
+        user : userCheckIs,
+    };
+    return data;
 }
 
 export {listUsers, loginUser};
